@@ -1,0 +1,27 @@
+﻿<header>
+    <nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
+        <a class="navbar-brand" href="#">Streams</a>
+        <ul class="nav navbar-nav" ng-if="$ctrl.isAuthenticated()">
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa fa-home fa-lg"></i>ホーム</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa fa-users"></i>グループ</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa fa-user"></i>プロフィール</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav float-xs-right">
+            <li class="nav-item" ng-if="!$ctrl.isAuthenticated()">
+                <a class="nav-link" href="#/login">ログイン</a>
+            </li>
+            <li class="nav-item" ng-if="$ctrl.isAuthenticated()">
+                <a class="nav-link" href="#/logout">ログアウト</a>
+            </li>
+            <li class="nav-item float-xs-right" ng-if="!$ctrl.isAuthenticated()">
+                <a class="btn btn-primary" href="#/signup">ユーザー登録</a>
+            </li>
+        </ul>
+    </nav>
+</header>

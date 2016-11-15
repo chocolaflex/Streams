@@ -1,0 +1,16 @@
+﻿/api/
+/api/login
+/api/users
+/api/users/:id
+/api/streams
+/api/streams/:id/:gen
+/api/groupes/:id/
+/api/groupes/:id/streams/:id/:gen/
+{
+	id,
+	name,
+	count,
+	since,
+	lastupdate,
+	generation
+}

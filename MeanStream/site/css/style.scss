@@ -1,0 +1,32 @@
+﻿$body-bg:    #f0f6da;
+@import "bootstrap/bootstrap.scss";
+
+.navbar {
+	border-radius : 0;
+}
+.main-wrapper {
+    display: block;
+	margin-top : 54px;
+}
+
+.res {
+	margin-top : 12px;
+	margin-bottom : 12px;
+}
+.res-text {
+	font-size : 14px;
+	position : relative;
+}
+.res-action {
+	position : absolute;
+	padding-right : 10px;
+	padding-bottom : 0.4rem;
+	bottom : 0;
+	right : 0;
+}
+.res-header {
+	padding: 0.2rem 0.6rem;
+}
+.res-sidebar {
+	position : fixed;
+}

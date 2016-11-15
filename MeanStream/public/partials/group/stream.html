@@ -1,0 +1,63 @@
+
+<div class="container main-container">
+     <div class="row">
+    <div class="col-sm-8">
+        <ol class="list-unstyled">
+            <li class="media res" ng-repeat="res in $ctrl.stream.responses | orderBy: 'id': true">
+                <div class="media-left media-middle">
+                    <img class="avatar rounded media-object" src="layout/images/icon.jpg" height="64" width="64" />
+                </div>
+                <div class="card media-body">
+                    <div class="card-header res-header text-muted">
+                        <span class="res-header-left">
+                            <span class="res-no">{{res.id}}</span> :
+                            <span class="res-name">{{res.user.name}}</span>
+                        </span>
+                        <span class="res-header-right float-xs-right">
+                            <span class="res-date"><small>{{res.date}}</small></span>
+                            <a class="nav-link text-muted" href="#"><i class="fa fa-remove"></i></a>
+                        </span>
+                    </div>
+                    <div class="res-text card-block">
+                        <p>
+                            {{res.message}}
+                        </p>
+                        <ul class="list-inline card-text res-adaptive-media" ng-if="res.media">
+                            <li class="list-inline-item" ng-repeat="amedia in res.media"><a href="{{amedia.url}}"><img class="rounded" src="{{amedia.url}}" height="84" /></a></li>
+                         </ul>
+                        <ul class="res-action nav nav-inline">
+                            <li class="nav-item"><a class="nav-link text-muted" href="#"><i class="fa fa-comment"></i>返信</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        </ol>
+    </div>
+    <div class="col-sm-4 sidebar">
+        <aside class="res-sidebar">
+            <div class="card res">
+
+                <div class="card-header res-header">
+                    書き込み
+                </div>
+                <form class="res-form card-block" ng-submit="$ctrl.response()">
+                    <div class="form-group">
+                        <textarea class="form-control" id="res-message" ng-model="$ctrl.res.message" cols="30" name="res-message" placeholder="メッセージ" rows="4"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <div flow-init="{target: '/upload'}" flow-file-success="$file.msg = $message">
+                            <div ng-repeat="file in $flow.files">
+                                <div class="text-truncate float-xs-left" style="width : 90%">{{file.name}}</div>
+                                <a href="#" class="float-xs-right"><i class="fa fa-remove"></i></a>
+                            </div>
+
+                            <button class="btn btn-outline-success btn-sm" flow-btn>ファイルを添付</button>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" type="submit">投稿</button>
+                </form>
+            </div>
+        </aside>
+    </div>
+         </div>
+</div>

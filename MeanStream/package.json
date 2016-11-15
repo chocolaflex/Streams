@@ -10,13 +10,31 @@
     "name": "chocolaflex"
   },
   "dependencies": {
-    "express": "~4.9.0",
+    "angular": "^1.5.8",
+    "bcryptjs": "^2.3.0",
     "body-parser": "~1.8.1",
+    "connect-flash": "^0.1.1",
     "cookie-parser": "~1.3.3",
-    "morgan": "~1.3.0",
-    "serve-favicon": "~2.1.3",
     "debug": "~2.0.0",
+    "express": "^4.14.0",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-cli": "^1.2.2",
+    "gulp-plumber": "^1.1.0",
+    "gulp-sass": "^2.3.2",
     "jade": "~1.6.0",
-    "stylus": "0.42.3"
+    "jwt-simple": "^0.5.0",
+    "moment": "^2.15.2",
+    "mongoose": "^4.6.6",
+    "morgan": "~1.3.0",
+    "satellizer": "^0.15.5",
+    "serve-favicon": "~2.1.3",
+    "socket.io": "^1.5.1"
+  },
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-preset-es2015": "^6.18.0",
+    "gulp-babel": "^6.1.2",
+    "gulp-cssmin": "^0.1.7"
   }
 }
