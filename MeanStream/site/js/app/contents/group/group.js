@@ -1,21 +1,16 @@
 ﻿class GroupCtrl {
-    constructor($http, groupService) {
-        this.$injecter = ['$http', 'groupService'];
+    constructor($http, groupService,params) {
+        GroupCtrl.$inject = ['$http', 'groupService','params'];
         this.groupService = groupService;
+        this.params = params;
         this.$routerOnActivate = (next) => {
-            this.id = next.params.id;
-            $http.get(`api/groups/${this.id}`)
-                .then((res) => {
-                    this.groupService.set(res.data);
-                }, (error) => {
-
-                });
+            this.params.gid = next.params.gid;
         }
     }
 }
 app.component('groupCmp', {
     controller: GroupCtrl,
-    template: `<ng-outlet></ng-outlet><pre>`,
+    template: `<ng-outlet></ng-outlet>`,
     $routeConfig: [
         {
             path: '/',
@@ -24,9 +19,14 @@ app.component('groupCmp', {
             data: '$ctrl.group'
         },
         {
-            path: '/streams/...',
-            name: 'StreamsCmp',
-            component: 'streamsCmp'
+            path: '/streams',
+            name: 'StreamList',
+            component: 'streamListCmp'
+        },
+        {
+            path: '/streams/:sid',
+            name: 'Stream',
+            component: 'streamCmp'
         }
     ]
 });

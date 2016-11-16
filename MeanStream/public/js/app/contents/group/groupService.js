@@ -1,13 +1,13 @@
 'use strict';
 
-app.factory('groupService', function () {
-    var g = {};
-    return {
-        set: function set(group) {
-            g = group;
-        },
-        get: function get() {
-            return g;
-        }
+app.factory('groupService', function ($http) {
+    return function (groupId) {
+        return new Promise(function (resolve, reject) {
+            $http.get('api/groups/' + groupId).then(function (res) {
+                resolve(res.data);
+            }).catch(function (error) {
+                reject(error);
+            });
+        });
     };
 });

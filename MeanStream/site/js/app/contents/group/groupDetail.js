@@ -1,8 +1,16 @@
 ﻿class GroupDetailCtrl {
-    constructor(groupService) {
-        this.$injecter = ['groupService'];
+    constructor(groupService,params) {
+        this.$injecter = ['groupService','params'];
         this.groupService = groupService;
-        this.group = groupService.get();
+        this.params = params;
+    }
+    $routerOnActivate(next) {
+        this.groupId = this.params.gid;
+
+        this.groupService(this.groupId)
+            .then((group) => {
+                this.group = group;
+            });
     }
 }
 app.component('groupDetailCmp', {

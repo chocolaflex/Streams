@@ -1,13 +1,12 @@
-﻿
-app.factory('groupService', ($http) => {
-    return (groupId) => {
+﻿app.factory('streamService', ($http) => {
+    return (groupId, streamId) => {
         return new Promise((resolve, reject) => {
-            $http.get(`api/groups/${groupId}`)
+            $http.get(`api/groups/${groupId}/streams/${streamId}`)
                 .then((res) => {
                     resolve(res.data);
-                }).catch((error) => {
+                }, (error) => {
                     reject(error);
                 });
         });
-    }
+    };
 });

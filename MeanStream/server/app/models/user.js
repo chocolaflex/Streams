@@ -7,9 +7,12 @@ var userSchema = new Schema({
     id: { type: Number, unique: true },
     //URL、ログインで使用
     uid: { type: String, unique: true },
-    email: {type:String,unique:true},
+    email: { type: String, unique: true },
     name: String,
     password: { type: String, select: false },
+
+    icon: { type: Schema.Types.ObjectId, ref: 'Icon' },
+    picts: [{ type: Schema.Types.ObjectId, ref: 'Pict' }],
 
     bitbucket: String,
     facebook: String,

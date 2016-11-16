@@ -30,42 +30,46 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="app\models\counter.js" />
-    <Compile Include="app\models\group.js" />
-    <Compile Include="app\models\stream.js" />
-    <Compile Include="config\jwt.js" />
-    <Compile Include="config\middlewares\authentication.js" />
-    <Compile Include="config\middlewares\ensureAuthenticated.js" />
-    <Compile Include="config\mongodb.js" />
-    <Compile Include="config\satellizer.js" />
+    <Compile Include="server\app\models\counter.js" />
+    <Compile Include="server\app\models\group.js" />
+    <Compile Include="server\app\models\icon.js" />
+    <Compile Include="server\app\models\pict.js" />
+    <Compile Include="server\app\models\stream.js" />
+    <Compile Include="server\config\jwt.js" />
+    <Compile Include="server\config\middlewares\authentication.js" />
+    <Compile Include="server\config\middlewares\ensureAuthenticated.js" />
+    <Compile Include="server\config\middlewares\loginLimiter.js" />
+    <Compile Include="server\config\mongodb.js" />
+    <Compile Include="server\config\regex.js" />
+    <Compile Include="server\config\satellizer.js" />
     <Compile Include="gulpfile.babel.js" />
-    <Compile Include="routes\api.js" />
-    <Compile Include="routes\api\users.js" />
-    <Compile Include="routes\auth.js" />
-    <Compile Include="server.js" />
-    <Compile Include="app\models\user.js" />
-    <Compile Include="config\app.js" />
-    <Compile Include="routes\index.js" />
+    <Compile Include="server\routes\api.js" />
+    <Compile Include="server\routes\api\users.js" />
+    <Compile Include="server\routes\auth.js" />
+    <Compile Include="server\server.js" />
+    <Compile Include="server\app\models\user.js" />
+    <Compile Include="server\config\app.js" />
+    <Compile Include="server\routes\index.js" />
     <Compile Include="bin\www" />
+    <Compile Include="site\js\3rd\angular.audio.js" />
     <Compile Include="site\js\app\app.js" />
-    <Compile Include="site\js\app\contents\groups.js" />
     <Compile Include="site\js\app\contents\group\group.js" />
     <Compile Include="site\js\app\contents\group\groupDetail.js" />
     <Compile Include="site\js\app\contents\group\groupList.js" />
     <Compile Include="site\js\app\contents\group\groupService.js" />
+    <Compile Include="site\js\app\contents\group\stream\streamService.js" />
     <Compile Include="site\js\app\contents\login - Copy %282%29.js" />
     <Compile Include="site\js\app\contents\login - Copy %283%29.js" />
     <Compile Include="site\js\app\contents\login - Copy %284%29.js" />
     <Compile Include="site\js\app\contents\signup.js" />
     <Compile Include="site\js\app\contents\logout.js" />
     <Compile Include="site\js\app\contents\login.js" />
-    <Compile Include="site\js\app\contents\group\streams.js" />
     <Compile Include="site\js\app\contents\group\stream\stream.js" />
     <Compile Include="site\js\app\contents\group\stream\streamList.js" />
     <Compile Include="site\js\app\footer.js" />
     <Compile Include="site\js\app\header.js" />
     <Compile Include="site\js\app\contents\home.js" />
-    <Compile Include="site\js\app\store.js" />
+    <Compile Include="site\js\app\params.js" />
     <Compile Include="site\js\old\controllers - Copy\home.js" />
     <Compile Include="site\js\old\controllers - Copy\login.js" />
     <Compile Include="site\js\old\controllers - Copy\logout.js" />
@@ -78,10 +82,11 @@
     <Compile Include="site\js\old\main.js" />
     <Compile Include="site\js\old\route.js" />
     <Compile Include="site\js\old\stream.js" />
-    <Compile Include="socket.js" />
+    <Compile Include="server\socket.js" />
     <Content Include="note.txt" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <Content Include="server\views\layout.jade" />
     <Content Include="site\css\bootstrap\.scss-lint.yml" />
     <Content Include="site\css\bootstrap\bootstrap-flex.scss" />
     <Content Include="site\css\bootstrap\bootstrap-grid.scss" />
@@ -181,18 +186,18 @@
     <Content Include="site\partials\group\stream\res.html" />
     <Content Include="site\partials\group\stream\right.html" />
     <Content Include="typings.json" />
-    <Content Include="views\layout.jade" />
-    <Content Include="views\error.jade" />
+    <Content Include="server\views\error.jade" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="app\models\" />
+    <Folder Include="server\app\models\" />
     <Folder Include="bin\" />
-    <Folder Include="config\" />
-    <Folder Include="app\" />
-    <Folder Include="config\middlewares\" />
+    <Folder Include="server\config\" />
+    <Folder Include="server\app\" />
+    <Folder Include="server\config\middlewares\" />
+    <Folder Include="server\" />
     <Folder Include="site\" />
-    <Folder Include="routes\" />
-    <Folder Include="routes\api\" />
+    <Folder Include="server\routes\" />
+    <Folder Include="server\routes\api\" />
     <Folder Include="site\css\bootstrap\" />
     <Folder Include="site\css\bootstrap\mixins\" />
     <Folder Include="site\css\bootstrap\utilities\" />
@@ -205,6 +210,7 @@
     <Folder Include="site\js\app\contents\group\stream\" />
     <Folder Include="site\js\old\controllers - Copy\" />
     <Folder Include="site\js\old\" />
+    <Folder Include="site\se\" />
     <Folder Include="site\partials\" />
     <Folder Include="site\partials\group\" />
     <Folder Include="site\partials\group\stream\" />
@@ -224,6 +230,7 @@
     <Folder Include="typings\globals\gulp-plumber\" />
     <Folder Include="typings\globals\gulp-sass\" />
     <Folder Include="typings\globals\gulp\" />
+    <Folder Include="typings\globals\helmet\" />
     <Folder Include="typings\globals\jade\" />
     <Folder Include="typings\globals\jsonwebtoken\" />
     <Folder Include="typings\globals\jwt-simple\" />
@@ -239,7 +246,8 @@
     <Folder Include="typings\globals\serve-static\" />
     <Folder Include="typings\globals\socket.io\" />
     <Folder Include="typings\globals\stylus\" />
-    <Folder Include="views\" />
+    <Folder Include="server\views\" />
+    <Folder Include="typings\globals\validator\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="typings\globals\angular\index.d.ts" />
@@ -256,6 +264,7 @@
     <TypeScriptCompile Include="typings\globals\gulp-plumber\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\gulp-sass\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\gulp\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\helmet\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\jade\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\jsonwebtoken\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\jwt-simple\index.d.ts" />
@@ -271,6 +280,7 @@
     <TypeScriptCompile Include="typings\globals\serve-static\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\socket.io\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\stylus\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\validator\index.d.ts" />
     <TypeScriptCompile Include="typings\index.d.ts" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->

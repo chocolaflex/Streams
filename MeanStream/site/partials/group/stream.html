@@ -19,9 +19,7 @@
                         </span>
                     </div>
                     <div class="res-text card-block">
-                        <p>
-                            {{res.message}}
-                        </p>
+                        <p class="pre-line">{{res.message}}</p>
                         <ul class="list-inline card-text res-adaptive-media" ng-if="res.media">
                             <li class="list-inline-item" ng-repeat="amedia in res.media"><a href="{{amedia.url}}"><img class="rounded" src="{{amedia.url}}" height="84" /></a></li>
                          </ul>
@@ -40,9 +38,10 @@
                 <div class="card-header res-header">
                     書き込み
                 </div>
-                <form class="res-form card-block" ng-submit="$ctrl.response()">
-                    <div class="form-group">
-                        <textarea class="form-control" id="res-message" ng-model="$ctrl.res.message" cols="30" name="res-message" placeholder="メッセージ" rows="4"></textarea>
+                <form class="res-form card-block" ng-submit="$ctrl.response()" name="resForm">
+                    <div class="form-group has-feedback">
+                        <textarea class="form-control" id="res-message" ng-model="$ctrl.res.message" ng-keyup="!resForm.$invalid && $event.keyCode == 13 && $event.ctrlKey ? $ctrl.response() : null" cols="30" name="res-message" placeholder="メッセージ" rows="4" ng-maxlength="372"></textarea>
+                        <span class="ion-at form-control-feedback"></span>
                     </div>
                     <div class="form-group">
                         <div flow-init="{target: '/upload'}" flow-file-success="$file.msg = $message">
@@ -54,7 +53,7 @@
                             <button class="btn btn-outline-success btn-sm" flow-btn>ファイルを添付</button>
                         </div>
                     </div>
-                    <button class="btn btn-primary" type="submit">投稿</button>
+                    <button type="submit"ng-disabled="resForm.$invalid" class="btn btn-primary" >投稿</button>
                 </form>
             </div>
         </aside>

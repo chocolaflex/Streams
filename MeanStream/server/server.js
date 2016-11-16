@@ -4,8 +4,8 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var favicon = require('serve-favicon');
-var flash = require('connect-flash');
 var mongoose = require('mongoose');
+var helmet = require('helmet');
 var io = require('./socket');
 
 var mongodbConfig = require('./config/mongodb');
@@ -27,10 +27,11 @@ app.set('view engine', 'jade');
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
+app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../public')));
 
 //ルーティング
 //app.use('/', routes);

@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/e5cf069a241816a4d157b4d35d679881dee81512/helmet/helmet.d.ts",
+    "raw": "registry:dt/helmet#0.0.0+20160930124002",
+    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/e5cf069a241816a4d157b4d35d679881dee81512/helmet/helmet.d.ts"
+  }
+}

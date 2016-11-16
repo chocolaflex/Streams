@@ -69,10 +69,12 @@ app.component('app', {
         name: 'Logout',
         component: 'logoutCmp'
     }, {
-        path: '/groups/...',
-        name: 'Groups',
-        component: 'groupsCmp'
+        path: '/groups',
+        name: 'GroupList',
+        component: 'groupListCmp'
+    }, {
+        path: '/groups/:gid/...',
+        name: 'Group',
+        component: 'groupCmp'
     }]
 });
-
-app.service('StoreService', Store);

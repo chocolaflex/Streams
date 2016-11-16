@@ -2,32 +2,34 @@
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var GroupCtrl = function GroupCtrl($http, groupService) {
+var GroupCtrl = function GroupCtrl($http, groupService, params) {
     var _this = this;
 
     _classCallCheck(this, GroupCtrl);
 
-    this.$injecter = ['$http', 'groupService'];
+    GroupCtrl.$inject = ['$http', 'groupService', 'params'];
     this.groupService = groupService;
+    this.params = params;
     this.$routerOnActivate = function (next) {
-        _this.id = next.params.id;
-        $http.get('api/groups/' + _this.id).then(function (res) {
-            _this.groupService.set(res.data);
-        }, function (error) {});
+        _this.params.gid = next.params.gid;
     };
 };
 
 app.component('groupCmp', {
     controller: GroupCtrl,
-    template: '<ng-outlet></ng-outlet><pre>',
+    template: '<ng-outlet></ng-outlet>',
     $routeConfig: [{
         path: '/',
         name: 'GroupDetail',
         component: 'groupDetailCmp',
         data: '$ctrl.group'
     }, {
-        path: '/streams/...',
-        name: 'StreamsCmp',
-        component: 'streamsCmp'
+        path: '/streams',
+        name: 'StreamList',
+        component: 'streamListCmp'
+    }, {
+        path: '/streams/:sid',
+        name: 'Stream',
+        component: 'streamCmp'
     }]
 });

@@ -1,19 +1,26 @@
 ﻿class StreamCtrl {
-    constructor($socket,$http,groupService) {
-        StreamCtrl.$injecter = ['$socket','$http','groupService'];
+    constructor($socket,$http,streamService,params,$scope,toastr,ngAudio) {
+        StreamCtrl.$inject = ['$socket','$http','streamService','params','$scope','toastr','ngAudio'];
         this.$socket = $socket;
         this.$http = $http;
-        this.groupService = groupService;
-        this.group = this.groupService.get();
+        this.streamService = streamService;
+        this.params = params;
+        this.$scope = $scope;
+        this.toastr = toastr;
+        this.se = ngAudio.load();
     }
     $routerOnActivate(next) {
-        this.id = next.params.id;
-        this.$http.get(`api/groups/${this.group.id}/streams/${this.id}`)
-            .then((res) => {
-                this.stream = res.data;
-                //this.$parent.title = data.title;
-                //this.count = data.count;
+        this.params.sid = next.params.sid;
+        this.streamId = this.params.sid;
+        this.groupId = this.params.gid;
+        this.streamService(this.groupId,this.streamId)
+            .then((stream) => {
+                this.stream = stream;
+                this.group = stream.group;
                 if (this.stream.access) {
+                    this.$socket.on('err_stream', (message)=>{
+                        this.toastr.error(message);
+                    });
                     this.$socket.emit('req_join', {
                         group: this.group.id,
                         stream: this.stream.id,
@@ -25,13 +32,15 @@
                                 stream: this.stream.id,
                                 message : this.res.message
                             });
+                            this.res = {};
                         }
                         this.$socket.on('s2c_message', (message) => {
                             this.stream.responses.push(message);
                         });
                     });
                 }
-            }, (error) => {
+            })
+            .catch((error) => {
 
             });
     }

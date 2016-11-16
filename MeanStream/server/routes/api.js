@@ -1,21 +1,14 @@
 ﻿var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var crypto = require('crypto');
+var validator = require('validator');
+var regex = require('../config/regex');
 
 var User = require('../app/models/user');
-var Group = require('../app/models/group');
 var Group = require('../app/models/group').Group;
 var Stream = require('../app/models/group').Stream;
-var jwt = require('jwt-simple');
-var jwtConfig = require('../config/jwt');
 var ensureAuthenticated = require('../config/middlewares/ensureAuthenticated');
 
-var getHash = function (password) {
-    var sha512 = crypto.createHash('sha512');
-    sha512.update(password);
-    return sha512.digest('hex');
-}
 
 router.get('/', function (req, res) {
     res.json({ message: 'Successfully' });
@@ -27,6 +20,40 @@ router.route('/me').get(ensureAuthenticated, function (req, res) {
     });
 });
 
+const checkUid = (req, res, next) => {
+    const uid = req.params.uid;
+    if (!uid)
+        res.status(400).send('ユーザーIDがありません');
+    if (!validator.isLength(uid, { max: 32 }))
+        res.status(400).send('ユーザーIDが長すぎます');
+    if (!regex.uid.exec(uid))
+        res.status(400).send('ユーザーIDが正しくありません');
+    req.checkedUid = uid;
+    next();
+};
+const checkGid = (req, res, next) => {
+    const gid = req.params.gid;
+    if (!gid)
+        res.status(400).send('グループIDがありません');
+    if (!validator.isLength(gid, { max: 32 }))
+        res.status(400).send('グループIDが長すぎます');
+    if (!validator.isNumeric(gid))
+        res.status(400).send('グループIDが正しくありません');
+    req.checkedGid = gid;
+    next();
+};
+const checkSid = (req, res, next) => {
+    const sid = req.params.gid;
+    if (!sid)
+        res.status(400).send('ストリームIDがありません');
+    if (!validator.isLength(sid, { max: 32 }))
+        res.status(400).send('ストリームIDが長すぎます');
+    if (!validator.isNumeric(sid))
+        res.status(400).send('ストリームIDが正しくありません');
+    req.checkedSid = sid;
+    next();
+};
+
 router.route('/users')
     .get((req, res) =>{
         User.find(function (err, users) {
@@ -36,9 +63,12 @@ router.route('/users')
             res.json(users);
         });
     });
-router.route('/users/:id')
-    .get(ensureAuthenticated, (req, res) => {
-        User.findById(req.id, (err, user) => {
+router.route('/users/:uid')
+    .get(ensureAuthenticated,
+    checkUid,
+    (req, res) => {
+        let uid = req.checkedUid;
+        User.findById(uid, (err, user) => {
             if (err) {
                 res.send(err);
             }
@@ -68,7 +98,8 @@ router.route('/groups')
         });
     });
 const findGroup = (req, res, next) => {
-    Group.findOne({ id: req.params.gid }, (err, group) => {
+    const gid = req.checkedGid;
+    Group.findOne({ id: gid }, (err, group) => {
         if (!group) res.json({ message: 'Group not found!' });
         req.group = group;
         next();
@@ -76,6 +107,7 @@ const findGroup = (req, res, next) => {
 };
 router.route('/groups/:gid')
     .get(ensureAuthenticated,
+    checkGid,
     findGroup,
     (req, res) => {
         let streams = [];
@@ -106,6 +138,7 @@ const findStream = (req, res, next) => {
 }
 router.route('/groups/:gid/streams')
     .get(ensureAuthenticated,
+    checkGid,
     findGroup,
     (req, res) => {
         let streams = [];
@@ -119,6 +152,7 @@ router.route('/groups/:gid/streams')
         res.json(streams);
     })
     .post(ensureAuthenticated,
+        checkGid,
     findGroup,
     (req, res) => {
         var stream = new Stream();
@@ -135,6 +169,8 @@ router.route('/groups/:gid/streams')
 
 router.route('/groups/:gid/streams/:sid')
     .get(ensureAuthenticated,
+    checkGid,
+        checkSid,
     findGroup,
     findStream,
     (req, res) => {
@@ -143,7 +179,11 @@ router.route('/groups/:gid/streams/:sid')
             name: req.stream.name,
             last: req.stream.last,
             access: true,
-            responses: req.stream.responses
+            responses: req.stream.responses,
+            group: {
+                id: req.group.id,
+                name: req.group.name
+            }
         });
     });
 
