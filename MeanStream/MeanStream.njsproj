@@ -58,9 +58,6 @@
     <Compile Include="site\js\app\contents\group\groupList.js" />
     <Compile Include="site\js\app\contents\group\groupService.js" />
     <Compile Include="site\js\app\contents\group\stream\streamService.js" />
-    <Compile Include="site\js\app\contents\login - Copy %282%29.js" />
-    <Compile Include="site\js\app\contents\login - Copy %283%29.js" />
-    <Compile Include="site\js\app\contents\login - Copy %284%29.js" />
     <Compile Include="site\js\app\contents\signup.js" />
     <Compile Include="site\js\app\contents\logout.js" />
     <Compile Include="site\js\app\contents\login.js" />

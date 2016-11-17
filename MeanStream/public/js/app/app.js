@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('app', ['ngComponentRouter', 'satellizer', 'toastr']);
+var app = angular.module('app', ['ngComponentRouter', 'satellizer', 'toastr', 'ngAudio']);
 app.config(function ($authProvider) {
 
     /**

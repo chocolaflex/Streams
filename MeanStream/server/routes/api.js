@@ -132,7 +132,7 @@ const findStream = (req, res, next) => {
     const stream = req.group.streams.find((s) => {
         if (s.id == req.params.sid) return s;
     });
-    if (!stream) re.json({ message: 'Stream not found!' });
+    if (!stream) res.json({ message: 'Stream not found!' });
     req.stream = stream;
     next();
 }
@@ -174,17 +174,31 @@ router.route('/groups/:gid/streams/:sid')
     findGroup,
     findStream,
     (req, res) => {
-        res.json({
-            id: req.stream.id,
-            name: req.stream.name,
-            last: req.stream.last,
-            access: true,
-            responses: req.stream.responses,
-            group: {
-                id: req.group.id,
-                name: req.group.name
-            }
+        const p = new Promise((resolve,reject) => {
+            req.stream.responses.forEach((res) => {
+                res.message = res.message || "";
+                res.message = validator.escape(res.message);
+            });
+            resolve();
         });
+        p.then(() => {
+            res.json({
+                id: req.stream.id,
+                name: req.stream.name,
+                last: req.stream.last,
+                access: {
+                    write: true,
+                    visible: true
+                },
+                responses: req.stream.responses,
+                group: {
+                    id: req.group.id,
+                    name: req.group.name
+                }
+            });
+        }).catch((err) => {
+            res.status(400).send('ストリームを取得できません');
+            });
     });
 
 module.exports = router;

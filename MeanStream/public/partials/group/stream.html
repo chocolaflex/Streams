@@ -19,7 +19,7 @@
                         </span>
                     </div>
                     <div class="res-text card-block">
-                        <p class="pre-line">{{res.message}}</p>
+                        <p class="pre-line" ng-bind-html="$ctrl.$sce.trustAsHtml(res.message)"></p>
                         <ul class="list-inline card-text res-adaptive-media" ng-if="res.media">
                             <li class="list-inline-item" ng-repeat="amedia in res.media"><a href="{{amedia.url}}"><img class="rounded" src="{{amedia.url}}" height="84" /></a></li>
                          </ul>

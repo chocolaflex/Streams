@@ -5,16 +5,18 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var StreamCtrl = function () {
-    function StreamCtrl($socket, $http, streamService, params, $scope, toastr) {
+    function StreamCtrl($socket, $http, streamService, params, $scope, toastr, ngAudio, $sce) {
         _classCallCheck(this, StreamCtrl);
 
-        StreamCtrl.$inject = ['$socket', '$http', 'streamService', 'params', '$scope', 'toastr'];
+        StreamCtrl.$inject = ['$socket', '$http', 'streamService', 'params', '$scope', 'toastr', 'ngAudio', '$sce'];
         this.$socket = $socket;
         this.$http = $http;
         this.streamService = streamService;
         this.params = params;
         this.$scope = $scope;
         this.toastr = toastr;
+        this.$sce = $sce;
+        //        this.se = ngAudio.load();
     }
 
     _createClass(StreamCtrl, [{

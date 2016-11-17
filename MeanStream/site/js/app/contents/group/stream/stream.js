@@ -1,13 +1,14 @@
 ﻿class StreamCtrl {
-    constructor($socket,$http,streamService,params,$scope,toastr,ngAudio) {
-        StreamCtrl.$inject = ['$socket','$http','streamService','params','$scope','toastr','ngAudio'];
+    constructor($socket,$http,streamService,params,$scope,toastr,ngAudio,$sce) {
+        StreamCtrl.$inject = ['$socket','$http','streamService','params','$scope','toastr','ngAudio','$sce'];
         this.$socket = $socket;
         this.$http = $http;
         this.streamService = streamService;
         this.params = params;
         this.$scope = $scope;
         this.toastr = toastr;
-        this.se = ngAudio.load();
+        this.$sce = $sce;
+//        this.se = ngAudio.load();
     }
     $routerOnActivate(next) {
         this.params.sid = next.params.sid;
